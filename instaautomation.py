@@ -1,11 +1,9 @@
-import time
-from telnetlib import EC
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import pyautogui
 
 import login_user
 
@@ -16,7 +14,7 @@ class InstaAutomation:
     def __init__(self):
         opts = Options()
         opts.add_argument("user-agent=Mozilla/5.0 (Linux; Android 8.1.0; Infinix X572) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Mobile Safari/537.36")
-        self.browser = webdriver.Chrome(chrome_options=opts)
+        self.browser = webdriver.Chrome(options=opts)
 
     def login(self, user_name, password):
         self.load_instagram_start_page()
@@ -65,9 +63,21 @@ class InstaAutomation:
     def post(self):
         x_path_post = "/html/body/div[1]/section/nav[2]/div/div/div[2]/div/div/div[3]"
         post = self.browser.find_element_by_xpath(x_path_post)
+
+        file = "home/tobias/Pictures/Frankfurt.jpg"
         print(post)
         post.click()
-        # self.no_notifications()
+        #pyautogui.write(file)
+
+        _, path = file.split("tobias/")
+        elems = path.split("/")
+
+        for elem in elems:
+            pyautogui.hotkey('ctrl', 'f')
+            pyautogui.write(elem)
+            pyautogui.press('enter')
+
+        self.no_notifications()
 
 
 if __name__ == '__main__':
