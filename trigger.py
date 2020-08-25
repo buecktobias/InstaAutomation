@@ -1,18 +1,16 @@
-import datetime
 import time
 from datetime import timedelta
 import abc
-import threading
-from automation import Automation
 
 
-class Trigger(abc.ABC, threading.Thread):
-    def __init__(self, interval: timedelta, trigger_object: Automation):
+class Trigger(abc.ABC):
+    def __init__(self, interval: timedelta, trigger_object):
         super().__init__()
         self.interval = interval
         self.triger_object = trigger_object
 
     def run(self):
+        self.triger_object.trigger()
         while True:
             time.sleep(self.interval.seconds)
             if self.test():
@@ -29,9 +27,6 @@ class EbayTrigger(Trigger):
         return True
 
 
-if __name__ == '__main__':
-    et = EbayTrigger(timedelta(seconds=2), Automation())
-    et.start()
 
 
 
