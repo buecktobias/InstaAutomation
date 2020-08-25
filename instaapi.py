@@ -20,7 +20,7 @@ class InstaAPI:
         opts.add_argument("user-agent=Mozilla/5.0 (Linux; Android 8.1.0; Infinix X572) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Mobile Safari/537.36")
         opts.add_argument("--headless")
         self.browser = webdriver.Chrome(options=opts)
-        self.browser.implicitly_wait(4)
+        self.browser.implicitly_wait(10)
 
     def login(self, user_name, password):
         self.__load_instagram_start_page()
@@ -51,7 +51,7 @@ class InstaAPI:
     def __not_save(self):
         try:
             xpath_not_save = "/html/body/div[1]/section/main/div/div/div/button"
-            wait = WebDriverWait(self.browser, 2)
+            wait = WebDriverWait(self.browser, 10)
             not_save = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_not_save)))
             not_save.click()
         except Exception as e:
@@ -60,7 +60,7 @@ class InstaAPI:
     def not_homescreen(self):
         try:
             xpath_not_home = "/html/body/div[4]/div/div/div/div[3]/button[2]"
-            wait = WebDriverWait(self.browser, 2)
+            wait = WebDriverWait(self.browser, 10)
             not_home = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_not_home)))
             not_home.click()
         except Exception as e:
@@ -77,7 +77,7 @@ class InstaAPI:
     def __yes_notifications(self):
         try:
             xpath_yes = "/html/body/div[4]/div/div/div/div[3]/button[1]"
-            wait = WebDriverWait(self.browser, 3)
+            wait = WebDriverWait(self.browser, 10)
             not_home = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_yes)))
             not_home.click()
         except Exception as e:
@@ -111,7 +111,9 @@ class InstaAPI:
 
     def __next_post(self):
         x_path_next = "/html/body/div[1]/section/div[1]/header/div/div[2]/button"
-        self.browser.find_element_by_xpath(x_path_next).click()
+        wait = WebDriverWait(self.browser, 10)
+        not_home = wait.until(EC.element_to_be_clickable((By.XPATH, x_path_next)))
+        not_home.click()
 
     def __post_options(self, caption):
         x_path_textarea_caption = "/html/body/div[1]/section/div[2]/section[1]/div[1]/textarea"

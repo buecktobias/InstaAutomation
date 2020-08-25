@@ -26,7 +26,7 @@ class Automation:
 
 class EbayAutomation(Automation):
     def __init__(self, name, city):
-        super().__init__(name, EbayTrigger(timedelta(minutes=5), self))
+        super().__init__(name, EbayTrigger(timedelta(minutes=10), self))
         self.city = city
 
     def trigger(self):
