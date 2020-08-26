@@ -9,7 +9,7 @@ class User:
         self.load()
 
     def load(self):
-        auth = json.load(open("/home/tobias/PycharmProjects/InstaAutomation/credentials.json", 'r'))[self.name]["auth"]
+        auth = json.load(open("/home/tobias/PycharmProjects/InstaAutomationv2/credentials.json", 'r'))[self.name]["auth"]
         self.user_name = auth["userName"]
         self.password = auth["password"]
 

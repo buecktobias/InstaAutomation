@@ -5,7 +5,7 @@ from trigger import EbayTrigger
 from datetime import timedelta
 from ebayAPI import EbayAPI
 from post import Post
-
+from PIL import Image, ImageDraw, ImageFont
 
 class Automation:
     def __init__(self, name, trigger_object):
@@ -26,19 +26,28 @@ class Automation:
 
 class EbayAutomation(Automation):
     def __init__(self, name, city):
-        super().__init__(name, EbayTrigger(timedelta(minutes=10), self))
+        super().__init__(name, EbayTrigger(timedelta(seconds=10), self))
         self.city = city
+        self.hashtags = ["#ebay"]
 
     def trigger(self):
-        try:
+        #try:
             eb = EbayAPI().search(self.city)
             img_path = eb.get_image()
-            text = eb.title + f"\n Ebay: {eb.ebay_link}"
+
+            img = Image.open(img_path)
+            d1 = ImageDraw.Draw(img)
+            d1.text((20, 20), "Hello, TutorialsPoint!", fill=(255, 0, 0))
+            img.save(img_path)
+
+            hashtags = self.hashtags + list(map(lambda x: "#" + x, eb.title.split(" ")))
+            hashtags_string = " ".join(hashtags)
+            text = eb.title + f"\n Ebay: {eb.ebay_link} \n\n {hashtags_string}"
             post = Post(text, img_path)
             self.post(post)
             self.insta_api.reset_browser()
-        except Exception as e:
-            print(e)
+        #except Exception as e:
+         #   print(e)
 
 
 if __name__ == '__main__':

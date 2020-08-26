@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pyautogui
-
+from user import User
 import login_user
 
 INSTAGRAM_URL = "http://www.instagram.com"
@@ -135,6 +135,6 @@ if __name__ == '__main__':
     file = "home/tobias/Pictures/ebay/grass.jpg"
     caption = "Krasses Bild aus ffm"
     l = InstaAPI()
-
-    l.login(login_user.username, login_user.PASSWORD)
+    u = User("ebayBot")
+    l.login(u.user_name, u.password)
     l.post(file, caption)
